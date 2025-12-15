@@ -11,6 +11,7 @@ function App() {
 
   let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
+  // useNavigate를 주로 사용하는 방법
 
   return (
 
@@ -18,7 +19,7 @@ function App() {
 
       <Navbar bg="light" data-bs-theme="light">
         <Container>
-          <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+          <Navbar.Brand href="#home">ShoeShop</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={function () { navigate('/') }}>Home</Nav.Link>
             <Nav.Link onClick={function () { navigate('/detail') }}>Detail</Nav.Link>
@@ -48,8 +49,8 @@ function App() {
 
           </div>
         } />
-        <Route path='/detail' element={<Detail />} />
-        <Route path='*' element={<div>404 없는 페이지</div>} />
+        <Route path='/detail/:id' element={<Detail shoes={shoes}></Detail>} />
+        {/* url parameter : :id, :abcd 등 여러방식으로 사용가능 */}
 
         <Route path='/about' element={<AboutPage></AboutPage>}>
           <Route path='member' element={<div>멤버임</div>} />
@@ -60,6 +61,8 @@ function App() {
           <Route path='one' element={<p>첫 주문시 양배추즙 서비스</p>} />
           <Route path='two' element={<p>생일기념 쿠폰받기</p>} />
         </Route>
+
+        <Route path='*' element={<div>404 없는 페이지</div>} />
 
       </Routes>
 
