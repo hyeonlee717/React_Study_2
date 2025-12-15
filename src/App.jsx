@@ -4,11 +4,13 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import data from './data.js';
 import { useState } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
+import Detail from './routes/Detail.jsx';
 
 function App() {
 
   let [shoes, setShoes] = useState(data);
+  let navigate = useNavigate();
 
   return (
 
@@ -18,8 +20,9 @@ function App() {
         <Container>
           <Navbar.Brand href="#home">Navbar</Navbar.Brand>
           <Nav className="me-auto">
-            <Link to='/'>Home</Link>
-            <Link to='/detail'>Detail</Link>
+            <Nav.Link onClick={function () { navigate('/') }}>Home</Nav.Link>
+            <Nav.Link onClick={function () { navigate('/detail') }}>Detail</Nav.Link>
+            <Nav.Link onClick={function () { navigate('/event') }}>Event</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -45,29 +48,42 @@ function App() {
 
           </div>
         } />
-        <Route path='/detail' element={
-          <div>
+        <Route path='/detail' element={<Detail />} />
+        <Route path='*' element={<div>404 없는 페이지</div>} />
 
-            <div className="container">
-              <div className="row">
-                <div className="col-md-6">
-                  <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
-                </div>
-                <div className="col-md-6">
-                  <h4 className="pt-5">상품명</h4>
-                  <p>상품설명</p>
-                  <p>120000원</p>
-                  <button className="btn btn-danger">주문하기</button>
-                </div>
-              </div>
-            </div>
+        <Route path='/about' element={<AboutPage></AboutPage>}>
+          <Route path='member' element={<div>멤버임</div>} />
+          <Route path='location' element={<div>위치임</div>} />
+        </Route>
 
-          </div>} />
+        <Route path='/event' element={<EventPage></EventPage>}>
+          <Route path='one' element={<p>첫 주문시 양배추즙 서비스</p>} />
+          <Route path='two' element={<p>생일기념 쿠폰받기</p>} />
+        </Route>
+
       </Routes>
 
 
 
     </div >
+  )
+}
+
+function EventPage() {
+  return (
+    <div>
+      <h4>오늘의 이벤트</h4>
+      <Outlet></Outlet>
+    </div>
+  )
+}
+
+function AboutPage() {
+  return (
+    <div>
+      회사정보임
+      <Outlet></Outlet>
+    </div>
   )
 }
 
