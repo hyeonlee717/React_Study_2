@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
+// styled-components
 let Btn = styled.button`
-background: ${props => props.bg};
-color: ${props => props.bg == 'blue' ? 'white' : 'black'};
+background: ${props => props.$bg};
+color: ${props => props.$bg == 'blue' ? 'white' : 'black'};
 padding: 10px;
 `
 // 장점
@@ -23,23 +25,57 @@ padding: 10px;
 // 그래서 신기술같은거 도입시엔 언제나 미래를 생각해보아야합니다. 
 
 function Detail(props) {
-
     let { id } = useParams();
     // url parameter 자리에 있는 정보가 useParams()에 남음
-    let 찾은상품 = props.shoes.find(function (x) {
-        return x.id == id;
-    });
+    let 찾은상품 = props.shoes.find(function (x) { return x.id == id; });
+    // let [count, setCount] = useState(0);
+    // let [showAlert, setShowAlert] = useState(true);
+    let [newInput, setNewInput] = useState('')
+
+    // useEffect(function () {
+    //     let timer = setTimeout(function () { setShowAlert(false) }, 2000);
+    //     console.log(2)
+    //     return function () {
+    //         console.log(1)
+    //         clearTimeout(timer)
+    //     }
+    // }, [count])
+    // useEffect
+    // html요소들을 먼저 다 읽고나서 실행해줌
+    // 어려운연산, 서버에서 데이터 가져오는 작업, 타이머 등에 쓰임
+
+    useEffect(function () {
+        if (isNaN(newInput) == true) {
+            alert('숫자만 입력하셈!')
+        }
+    }, [newInput])
 
     return (
         <div className="container">
 
-            <Btn bg={'blue'}>버튼</Btn>
-            <Btn bg={'orange'}>버튼</Btn>
+            {/* <p>{count}</p>
+            <button onClick={function () {
+                setCount(count + 1);
+            }}>버튼</button>
+
+            {
+                showAlert === true ?
+                    <div className="alert alert-warning">
+                        <p>2초이내 구매시 할인</p>
+                    </div>
+                    : null
+            } */}
+
+            {/* <Btn $bg={'blue'}>버튼</Btn>
+            <Btn $bg={'orange'}>버튼</Btn> */}
 
             <div className="row">
                 <div className="col-md-6">
                     <img src={`https://codingapple1.github.io/shop/shoes${parseInt(id) + 1}.jpg`} width="100%" />
                 </div>
+                <input type="text" onChange={function (e) {
+                    setNewInput(e.target.value);
+                }} />
                 <div className="col-md-6">
                     <h4 className="pt-5">{찾은상품.title}</h4>
                     <p>{찾은상품.content}</p>
