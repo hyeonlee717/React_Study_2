@@ -13,6 +13,8 @@ function App() {
   let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
   // useNavigate를 주로 사용하는 방법
+  let [btnClickedCount, setBtnClickedCount] = useState(2);
+  let [isLoading, setIsLoading] = useState(false);
 
   return (
 
@@ -48,8 +50,15 @@ function App() {
               </div>
             </div>
 
+            {
+              btnClickedCount == 5 ?
+                <h4>더이상 상품이 없습니다</h4>
+                : null
+            }
+
             <button onClick={function () {
-              axios.get('https://codingapple1.github.io/shop/data2.json')
+              setIsLoading(true)
+              axios.get(`https://codingapple1.github.io/shop/data${btnClickedCount}.json`)
                 .then(function (result) {
                   let copyShoes = [...shoes, ...result.data]
                   setShoes(copyShoes)
@@ -57,7 +66,12 @@ function App() {
                 .catch(function () {
                   console.log('DATA GET ERROR')
                 })
+                .finally(function () {
+                  setIsLoading(false)
+                })
+              setBtnClickedCount(btnClickedCount + 1);
             }}>버튼</button>
+
 
           </div>
         } />
