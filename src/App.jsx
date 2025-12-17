@@ -6,6 +6,7 @@ import data from './data.js';
 import { useState } from 'react';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './routes/Detail.jsx';
+import axios from 'axios';
 
 function App() {
 
@@ -46,6 +47,16 @@ function App() {
                 }
               </div>
             </div>
+
+            <button onClick={function () {
+              axios.get('https://codingapple1.github.io/shop/data2.json')
+                .then(function (result) {
+                  console.log(result.data)
+                })
+                .catch(function () {
+                  console.log('DATA GET ERROR')
+                })
+            }}>버튼</button>
 
           </div>
         } />
