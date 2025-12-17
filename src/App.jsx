@@ -51,7 +51,8 @@ function App() {
             <button onClick={function () {
               axios.get('https://codingapple1.github.io/shop/data2.json')
                 .then(function (result) {
-                  console.log(result.data)
+                  let copyShoes = [...shoes, ...result.data]
+                  setShoes(copyShoes)
                 })
                 .catch(function () {
                   console.log('DATA GET ERROR')
