@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { Nav } from "react-bootstrap";
 
 // styled-components
 let Btn = styled.button`
@@ -31,6 +32,7 @@ function Detail(props) {
     // let [count, setCount] = useState(0);
     // let [showAlert, setShowAlert] = useState(true);
     let [newInput, setNewInput] = useState('')
+    let [tap, setTap] = useState(0)
 
     // useEffect(function () {
     //     let timer = setTimeout(function () { setShowAlert(false) }, 2000);
@@ -84,7 +86,40 @@ function Detail(props) {
                 </div>
             </div>
 
+            <Nav variant="tabs" defaultActiveKey="link0">
+                <Nav.Item>
+                    <Nav.Link onClick={function () {
+                        setTap(0)
+                    }} eventKey="link0">버튼0</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link onClick={function () {
+                        setTap(1)
+                    }} eventKey="link1">버튼1</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link onClick={function () {
+                        setTap(2)
+                    }} eventKey="link2">버튼2</Nav.Link>
+                </Nav.Item>
+            </Nav>
+            <TabContent tap={tap}></TabContent>
+
         </div>
     )
 }
+
+function TabContent({ tap }) {
+    // props 안쓰고 이렇게 { a,b,c }로 사용해도 가능
+    if (tap == 0) {
+        return <div>내용0</div>
+    } else if (tap == 1) {
+        return <div>내용1</div>
+    } else if (tap == 2) {
+        return <div>내용2</div>
+    }
+    // return  [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tap]
+    // 굳이 if문 안쓰고 이렇게 써도 똑같음
+}
+
 export default Detail;
