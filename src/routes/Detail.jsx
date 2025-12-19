@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Nav } from "react-bootstrap";
+import { useLayoutEffect } from "react";
 
 // styled-components
 let Btn = styled.button`
@@ -34,6 +35,14 @@ function Detail(props) {
     let [newInput, setNewInput] = useState('')
     let [tap, setTap] = useState(0)
 
+    let [pageFade, setPageFade] = useState('')
+    useEffect(function () {
+        let timer = setTimeout(() => { setPageFade('end') }, 10);
+        return function () {
+            clearTimeout(timer)
+        }
+    }, [])
+
     // useEffect(function () {
     //     let timer = setTimeout(function () { setShowAlert(false) }, 2000);
     //     console.log(2)
@@ -53,7 +62,7 @@ function Detail(props) {
     }, [newInput])
 
     return (
-        <div className="container">
+        <div className={`container start ${pageFade}`}>
 
             {/* <p>{count}</p>
             <button onClick={function () {
@@ -111,14 +120,28 @@ function Detail(props) {
 
 function TabContent({ tap }) {
     // props 안쓰고 이렇게 { a,b,c }로 사용해도 가능
-    if (tap == 0) {
-        return <div>내용0</div>
-    } else if (tap == 1) {
-        return <div>내용1</div>
-    } else if (tap == 2) {
-        return <div>내용2</div>
-    }
-    // return  [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tap]
+    // if (tap == 0) {
+    //     return <div>내용0</div>
+    // } else if (tap == 1) {
+    //     return <div>내용1</div>
+    // } else if (tap == 2) {
+    //     return <div>내용2</div>
+    // }
+
+    let [fade, setFade] = useState('')
+    useLayoutEffect(() => {
+        setFade('') // start 상태 확실히 넣고
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                setFade('end') // 다음 프레임에서 end
+            })
+        })
+    }, [tap])
+    return (<div key={tap} className={`start ${fade}`}>
+        {[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tap]}
+    </div >)
+
     // 굳이 if문 안쓰고 이렇게 써도 똑같음
 }
 
