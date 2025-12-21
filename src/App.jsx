@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './routes/Detail.jsx';
 import axios from 'axios';
+import Cart from './routes/Cart.jsx';
 
 function App() {
 
@@ -77,6 +78,8 @@ function App() {
         } />
         <Route path='/detail/:id' element={<Detail shoes={shoes}></Detail>} />
         {/* url parameter : :id, :abcd 등 여러방식으로 사용가능 */}
+
+        <Route path='/cart' element={<Cart></Cart>}></Route>
 
         <Route path='/about' element={<AboutPage></AboutPage>}>
           <Route path='member' element={<div>멤버임</div>} />
