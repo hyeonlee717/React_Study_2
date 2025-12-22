@@ -26,8 +26,9 @@ function App() {
           <Navbar.Brand href="#home">ShoeShop</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={function () { navigate('/') }}>Home</Nav.Link>
-            <Nav.Link onClick={function () { navigate('/detail') }}>Detail</Nav.Link>
+            <Nav.Link onClick={function () { navigate('/detail/0') }}>Detail</Nav.Link>
             <Nav.Link onClick={function () { navigate('/event') }}>Event</Nav.Link>
+            <Nav.Link onClick={function () { navigate('/cart') }}>Cart</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

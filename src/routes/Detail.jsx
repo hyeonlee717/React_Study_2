@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Nav } from "react-bootstrap";
 import { useLayoutEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../store/cartSlice.js";
 
 // styled-components
 let Btn = styled.button`
@@ -61,6 +63,9 @@ function Detail(props) {
         }
     }, [newInput])
 
+    let cart = useSelector(state => state.cart)
+    let dispatch = useDispatch()
+
     return (
         <div className={`container start ${pageFade}`}>
 
@@ -91,7 +96,11 @@ function Detail(props) {
                     <h4 className="pt-5">{찾은상품.title}</h4>
                     <p>{찾은상품.content}</p>
                     <p>{찾은상품.price}</p>
-                    <button className="btn btn-danger">주문하기</button>
+                    <button className="btn btn-danger" onClick={function () {
+                        dispatch(addItem(
+                            { id: 찾은상품.id, name: `${찾은상품.title}`, count: 1 }
+                        ))
+                    }}>주문하기</button>
                 </div>
             </div>
 
@@ -140,9 +149,10 @@ function TabContent({ tap }) {
     }, [tap])
     return (<div key={tap} className={`start ${fade}`}>
         {[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tap]}
+        {/* 굳이 if문 안쓰고 이렇게 써도 똑같음 */}
     </div >)
 
-    // 굳이 if문 안쓰고 이렇게 써도 똑같음
+
 }
 
 export default Detail;
