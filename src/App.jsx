@@ -8,6 +8,7 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './routes/Detail.jsx';
 import axios from 'axios';
 import Cart from './routes/Cart.jsx';
+import { NavLink } from 'react-bootstrap';
 
 function App() {
 
@@ -23,7 +24,7 @@ function App() {
 
       <Navbar bg="light" data-bs-theme="light">
         <Container>
-          <Navbar.Brand href="#home">ShoeShop</Navbar.Brand>
+          <Navbar.Brand href="#home" onClick={function () { navigate('/') }}>ShoeShop</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={function () { navigate('/') }}>Home</Nav.Link>
             <Nav.Link onClick={function () { navigate('/detail/0') }}>Detail</Nav.Link>
@@ -122,11 +123,15 @@ function AboutPage() {
 
 function Card(props) {
   return (
+
     <div className="col-md-4">
-      <img src={`https://codingapple1.github.io/shop/shoes${props.i + 1}.jpg`} width="80%" />
-      <h4>{props.shoes.title}</h4>
-      <p>{props.shoes.content}</p>
-    </div>
+      <Link to={`/detail/${props.shoes.id}`}>
+        <img src={`https://codingapple1.github.io/shop/shoes${props.i + 1}.jpg`} width="80%" />
+        <h4>{props.shoes.title}</h4>
+        <p>{props.shoes.content}</p>
+      </Link>
+    </div >
+
   )
 }
 

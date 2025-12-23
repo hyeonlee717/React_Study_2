@@ -7,11 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../store/cartSlice.js";
 
 // styled-components
-let Btn = styled.button`
-background: ${props => props.$bg};
-color: ${props => props.$bg == 'blue' ? 'white' : 'black'};
-padding: 10px;
-`
+// let Btn = styled.button`
+// background: ${props => props.$bg};
+// color: ${props => props.$bg == 'blue' ? 'white' : 'black'};
+// padding: 10px;
+// `
 // 장점
 // 장점1.CSS 파일 오픈할 필요없이 JS 파일에서 바로 스타일넣을 수 있습니다.
 // 장점2.여기 적은 스타일이 다른 JS 파일로 오염되지 않습니다.원래 그냥 CSS파일은 오염됩니다.
@@ -44,6 +44,14 @@ function Detail(props) {
             clearTimeout(timer)
         }
     }, [])
+
+    useEffect(function () {
+        let watchedItems = localStorage.getItem('watched')
+        watchedItems = JSON.parse(watchedItems) || []
+        watchedItems.push(id)
+        watchedItems = Array.from(new Set(watchedItems))
+        localStorage.setItem('watched', JSON.stringify(watchedItems))
+    }, [id])
 
     // useEffect(function () {
     //     let timer = setTimeout(function () { setShowAlert(false) }, 2000);
